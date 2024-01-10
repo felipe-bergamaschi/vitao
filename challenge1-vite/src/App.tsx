@@ -1,6 +1,26 @@
+import { useEffect, useState } from 'react';
 import './App.css'
 
+const url = 'https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}';
+
+
 export default function App() {
+  const [data, setData] = useState('')
+
+  async function fetchData() {
+    const response = await fetch(url).then(response => response.json());
+
+    if (response.cod !== 200) {
+      throw new Error(`Error: ${response.message}`);
+    }
+
+    console.log({ response })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <div className="container">
       <div className="header">
