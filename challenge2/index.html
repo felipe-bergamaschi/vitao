@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados JSON</title>
+
+    <style>
+      :root{
+        --primary-color: #42b2ac;
+        --secondary-color: #553f97;
+        --tertiary-color: #3883cb;
+
+        --primary-color-opacity: #42b2ac33;
+        --secondary-color-opacity: #553f9733;
+        --tertiary-color-opacity: #3883cb33;
+
+        --text-primary: #202124;
+        --text-secondary: rgba(32, 33, 36, 0.6);
+        --border-color: rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        font-size: 16px;
+      }
+
+      body, html {
+        width: 100%;
+        height: 100dvh;
+      }
+
+      #root {
+        width: 100%;
+        height: 100%;
+        padding: 32px;
+        gap: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .header{
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      
+      h2, h3{
+        font-size: 28px;
+        font-weight: bold;
+        color: var(--text-primary);
+      }
+
+      h3{
+        font-size: 16px;
+      }
+
+      .description{
+        color: var(--text-secondary);
+        font-weight: bold;
+      }
+      
+      .content{
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .card-container{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .card-item{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: white;
+        padding: 8px;
+        border-radius: 8px;
+      }
+
+      .card-item p{
+        padding: 8px;
+        border-radius: 8px;
+      }
+
+      .bg-primary{
+        background-color: var(--primary-color-opacity);
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .bg-primary p{
+        background-color: var(--primary-color);
+        color: white;
+      }
+      
+
+      .bg-secondary{
+        background-color: var(--secondary-color-opacity);
+        color: var(--secondary-color);
+        font-weight: bold;
+      }
+
+      .bg-secondary p{
+        background-color: var(--secondary-color);
+        color: white;
+      }
+
+      .bg-tertiary{
+        background-color: var(--tertiary-color-opacity);
+        color: var(--tertiary-color);
+        font-weight: bold;
+      }
+
+      .bg-tertiary p{
+        background-color: var(--tertiary-color);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script>
+      var jsonData = [
+        {
+          "gender": "MEN",
+          "total": "212.9M",
+          "bg": "primary",
+          "country": {
+            "Australia": "12.84M",
+            "Ghana": "16.46M",
+            "Indonesia": "139.13M",
+            "Kenya": "27.32M"
+          }
+        },
+        {
+          "gender": "WOMEN",
+          "total": "212.9M",
+          "bg": "secondary",
+          "country": {
+            "Australia": "12.94M",
+            "Ghana": "16.38M",
+            "Indonesia": "137.23M",
+            "Kenya": "27.66M"
+          }
+        },
+        {
+          "gender": "YOUTH",
+          "total": "172.9M",
+          "bg": "tertiary",
+          "country": {
+            "Australia": "5.71M",
+            "Ghana": "14.62M",
+            "Indonesia": "82.96M",
+            "Kenya": "24.42M"
+          }
+        }
+      ]
+
+      function createHTML(data) {
+        return `
+          <div class="container">
+            <div class="header">
+              <h2>${data.total}</h2>
+              <p class="description">${data.gender}</p>
+            </div>
+
+            <div class="content">
+              <h3>By country</h3>
+
+              <div class="card-container">
+                ${Object.entries(data.country).map(([country, value]) => `
+                  <div class="card-item bg-${data.bg}">
+                    <p>${value}</p>
+                    <span>${country}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      var resultElement = document.getElementById('root');
+      resultElement.innerHTML = jsonData.map(createHTML).join('');
+  </script>
+  </body>
+</html>
